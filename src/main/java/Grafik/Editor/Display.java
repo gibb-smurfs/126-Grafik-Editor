@@ -4,30 +4,18 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- * Die Klasse Display stellt ein Fenster auf dem Bildschirm zur Verfuegung, in welchem
- * Figure-Objekte dargestellt werden koennen.
- * Siehe auch Java-Grundkurs Abschnitt 10.2 und 10.3.
- *
- * @author Andres Scheidegger
- */
 @SuppressWarnings("serial")
-public class Display extends JFrame {
-    /**
-     * Die Liste der dargestellten Figure-Objekte
-     */
+public class Display extends JFrame implements MouseListener {
     private List<Figure> figures = new ArrayList<Figure>();
 
-    /**
-     * Konstruktor. Initialisiert das Fenster in der Mitte des Bildschirms und erzeugt ein
-     * JFrame-Objekt, auf welchem die Figuren gezeichnet werden.
-     */
     Display() {
         Dimension windowSize = new Dimension(800, 600);
         setSize(windowSize);
@@ -39,6 +27,7 @@ public class Display extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         createAndAddDrawingPanel();
         setVisible(true);
+        addMouseListener(this);
     }
 
     private void createAndAddDrawingPanel() {
@@ -53,11 +42,6 @@ public class Display extends JFrame {
         });
     }
 
-    /**
-     * Zeichnet alle Figuren.
-     *
-     * @param g Referenz auf das Graphics-Objekt zum zeichnen.
-     */
     private void drawFigures(Graphics g) {
         for (Figure f : figures) {
             if (f instanceof Rectangle) {
@@ -73,21 +57,38 @@ public class Display extends JFrame {
         }
     }
 
-    /**
-     * Fuegt eine weitere Figure hinzu und loest die Auffrischung des Fensterinhaltes aus.
-     *
-     * @param figure Referenz auf das weitere Figure-Objekt.
-     */
     void addFigure(Figure figure) {
         figures.add(figure);
         repaint();
     }
 
-    /**
-     * Loescht alle Figuren und loest die Auffrischung des Fensterinhaltes aus.
-     */
     public void deleteAll() {
         figures.clear();
         repaint();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // e.getPoint().x / y
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

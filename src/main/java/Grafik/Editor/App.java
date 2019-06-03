@@ -1,5 +1,6 @@
 package Grafik.Editor;
 
+
 public class App {
     static Display addWindow(){
         return new Display();
