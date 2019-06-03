@@ -28,6 +28,7 @@ public class Display extends JFrame implements MouseListener {
         createAndAddDrawingPanel();
         setVisible(true);
         addMouseListener(this);
+        setFocusable(true);
     }
 
     private void createAndAddDrawingPanel() {
