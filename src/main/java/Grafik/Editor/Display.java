@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  * Die Klasse Display stellt ein Fenster auf dem Bildschirm zur Verfuegung, in welchem
- * Figur-Objekte dargestellt werden koennen.
+ * Figure-Objekte dargestellt werden koennen.
  * Siehe auch Java-Grundkurs Abschnitt 10.2 und 10.3.
  *
  * @author Andres Scheidegger
@@ -20,15 +20,15 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Display extends JFrame {
     /**
-     * Die Liste der dargestellten Figur-Objekte
+     * Die Liste der dargestellten Figure-Objekte
      */
-    private List<Figur> figuren = new ArrayList<Figur>();
+    private List<Figure> figures = new ArrayList<Figure>();
 
     /**
      * Konstruktor. Initialisiert das Fenster in der Mitte des Bildschirms und erzeugt ein
      * JFrame-Objekt, auf welchem die Figuren gezeichnet werden.
      */
-    public Display() {
+    Display() {
         Dimension windowSize = new Dimension(800, 600);
         setSize(windowSize);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,15 +42,13 @@ public class Display extends JFrame {
     }
 
     private void createAndAddDrawingPanel() {
-        // Das JPanel-Objekt ist ein Objekt einer anonymen Unterklasse von JPanel
-        // Siehe Java-Grundkurs Abschnitt 3.9
         add(new JPanel() {
             // Die paintComponent()-Methode wird automatisch aufgerufen, wenn irgendwer die repaint()-
             // Methode beim Dsiplay aufruft.
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                zeichneFiguren(g);
+                drawFigures(g);
             }
         });
     }
@@ -60,33 +58,36 @@ public class Display extends JFrame {
      *
      * @param g Referenz auf das Graphics-Objekt zum zeichnen.
      */
-    private void zeichneFiguren(Graphics g) {
-        for (Figur f : figuren) {
-            if (f instanceof Rechteck) {
-                Rechteck r = (Rechteck) f;
-                g.drawRect(r.getX(), r.getY(), r.getBreite(), r.getHoehe());
+    private void drawFigures(Graphics g) {
+        for (Figure f : figures) {
+            if (f instanceof Rectangle) {
+                Rectangle r = (Rectangle) f;
+                g.drawRect(r.x, r.y, r.getWidth(), r.getHeight());
+            } else if (f instanceof Line) {
+                Line l = (Line) f;
+                g.drawLine(l.x, l.y, l.getX2(), l.getY2());
+            } else if (f instanceof Circle) {
+                Circle c = (Circle) f;
+                g.drawOval(c.x, c.y, c.getRadius() * 2, c.getRadius() * 2);
             }
-            /* TODO: Hier muss fuer jede weitere Figur-Klasse, welche dargestellt werden koennen muss,
-             * ein analoger Abschnitt, wie fuer die Rechteck-Klasse folgen.
-             */
         }
     }
 
     /**
-     * Fuegt eine weitere Figur hinzu und loest die Auffrischung des Fensterinhaltes aus.
+     * Fuegt eine weitere Figure hinzu und loest die Auffrischung des Fensterinhaltes aus.
      *
-     * @param figur Referenz auf das weitere Figur-Objekt.
+     * @param figure Referenz auf das weitere Figure-Objekt.
      */
-    public void hinzufuegen(Figur figur) {
-        figuren.add(figur);
+    void addFigure(Figure figure) {
+        figures.add(figure);
         repaint();
     }
 
     /**
      * Loescht alle Figuren und loest die Auffrischung des Fensterinhaltes aus.
      */
-    public void allesLoeschen() {
-        figuren.clear();
+    public void deleteAll() {
+        figures.clear();
         repaint();
     }
 }
