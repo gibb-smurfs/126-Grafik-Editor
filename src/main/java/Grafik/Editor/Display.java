@@ -16,6 +16,11 @@ import javax.swing.JPanel;
 public class Display extends JFrame implements MouseListener {
     private List<Figure> figures = new ArrayList<Figure>();
 
+    private int startX;
+    private int startY;
+    private int endX;
+    private int endY;
+
     Display() {
         Dimension windowSize = new Dimension(800, 600);
         setSize(windowSize);
@@ -70,17 +75,20 @@ public class Display extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // e.getPoint().x / y
+        this.startX = e.getX();
+        this.startY = e.getY();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        this.endX = e.getX();
+        this.endY = e.getY();
+        Rectangle rectangle = new Rectangle(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY);
+        addFigure(rectangle);
     }
 
     @Override
